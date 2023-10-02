@@ -1,0 +1,77 @@
+{% extends "base/main.html" %}
+
+{% block content %}
+
+<div class="customHeader">
+
+    <div>
+
+        <h3>Workout:</h3>
+
+    </div>
+
+    <a href="{% url 'paginaPrincipalaUser' %}">Go back</a>
+
+</div>
+
+<hr>
+
+<div class="customBody">
+
+    <div>
+
+        <table>
+
+            <tr> <td> Title:&nbsp {{ListaPrincipala.workout.title}} </td> </tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+            <tr> <td> Date:&nbsp{{ListaPrincipala.workout.date}} </td> </tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+            <tr> <td> Description:&nbsp{{ListaPrincipala.workout.description}} </td> </tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+
+
+            <td>
+
+                <form method="POST" action="{% url 'reserveSpot' block_id=ListaPrincipala.id %}">
+
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input type="submit" value="Reserve Class">
+
+                </form>
+
+            </td>
+
+            <tr>
+
+                <td>
+
+                    <form method="POST" action="{% url 'cancelReservation' block_id=ListaPrincipala.id %}">
+
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <input type="submit" value="Cancel Reservation">
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock content %}

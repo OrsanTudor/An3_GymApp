@@ -1,0 +1,30 @@
+{% extends "base/main.html" %}
+
+{% block content %}
+
+<div class="customHeader">
+
+    <div>
+
+        <a href="{% url 'workoutPage' %}">Go back</a>
+
+    </div>
+
+</div>
+
+<hr>
+
+<div class="customBody">
+
+    <form method="POST">
+
+        {% csrf_token %}
+        <p>Are you sure you want to delete this workout: {{DeleteItem}}?</p>
+        <input type="submit" value="Delete">
+
+    </form>
+
+
+</div>
+
+{% endblock content %}

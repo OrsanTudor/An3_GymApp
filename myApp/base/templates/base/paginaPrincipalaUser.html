@@ -1,0 +1,97 @@
+{% extends "base/main.html" %}
+
+{% block content %}
+
+<div class="customHeader">
+
+    <div>
+
+        <h1>Hello, {{request.user}}</h1>
+
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+
+</div>
+
+<hr>
+
+<div class="customBody">
+
+    <h1>Vizualizare clase disponibile - {{dataActuala}}: </h1>
+
+    <form method="GET">
+
+        <input type="text" name="search-area" value="{{search_input}}">
+        <input type="submit" value="Search By Hour">
+
+        <table>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+        </table>
+
+    </form>
+
+    <table>
+        <tr>
+            <th>Gym classes:</th>
+            <th></th>
+        </tr>
+
+        {% for item in ListaPrincipala %}
+
+            <tr>
+
+                <td>{{item.title}},&nbsp&nbsp&nbsp</td>
+                <td>{{item.workout.title}},&nbsp&nbsp&nbsp</td>
+                <td>{{item.oraInceput}},&nbsp&nbsp&nbsp</td>
+
+                {% if item.listaParticipanti == None %}
+                    <td>Empty class,&nbsp&nbsp&nbsp</td>
+                {% else %}
+                    <td>{{item.listaParticipanti}},&nbsp&nbsp&nbsp</td>
+                {% endif %}
+
+                {% if item.complete == True %}
+                    <td>Full,&nbsp&nbsp&nbsp</td>
+                {% else %}
+                    {%if item.counterParticipanti == None %}
+                        <td>Not Full: 0 / 5 </td>
+                    {% else %}
+                        <td>Not Full: {{item.counterParticipanti}} / 5,&nbsp&nbsp&nbsp</td>
+                    {% endif %}
+                {% endif %}
+
+                {% if clasaRezervata == item %}
+                    <td> <input type="checkbox" onclick="return false" checked/>&nbsp&nbsp&nbsp</td>
+                {% else %}
+                    <td> <input type="checkbox" onclick="return false" />&nbsp&nbsp&nbsp</td>
+                {% endif %}
+
+                <td><a href="{% url 'viewWorkout' item.id %}">View Workout</a></td>
+
+            </tr>
+
+        {% empty %}
+        <h3>No items in list</h3>
+
+        {% endfor %}
+
+    </table>
+
+    <table>
+        <tr><td></td></tr>
+        <tr><td></td></tr>
+        <tr><td></td></tr>
+    </table>
+
+    <a href="{% url 'viewClassAttendanceList' %}">View Class Attendance List</a>
+
+</div>
+
+{% endblock content %}
